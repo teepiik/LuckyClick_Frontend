@@ -16,8 +16,9 @@ const Game = (props) => {
             <p>Game page</p>
             <p>Player: {props.user.username}</p>
             <p>Points: {props.user.points}</p>
+            <p>Last result: {props.gameMsg}</p>
             <p>Clicks to next win: {props.clicksToWin}</p>
-            <Button onClick={props.handleGameClick}>Lucky Click</Button>
+            <Button className='button' onClick={props.handleGameClick}>Lucky Click</Button>
         </div>
     )
 }

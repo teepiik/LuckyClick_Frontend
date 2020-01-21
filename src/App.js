@@ -3,6 +3,7 @@ import Home from './Components/Home'
 import Login from './Components/Login'
 import Game from './Components/Game'
 import Menu from './Components/Menubar'
+import Notification from './Components/Notification'
 import {
     BrowserRouter as Router,
     Route, Redirect
@@ -16,6 +17,8 @@ const App = () => {
     const [clicksToWin, setClicksToWin] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [gameMsg, setGameMsg] = useState('')
+    const [message, setMessage] = useState(null)
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -26,7 +29,7 @@ const App = () => {
             setUser(response.user)
             setUsername('')
             setPassword('')
-            console.log(response)
+            setUpNotification(`Logged in as ${response.user.username}`) // FIX THIS
         } catch (error) {
             console.log(error)
         }
@@ -38,9 +41,10 @@ const App = () => {
         // api/users/click/id
         // response {player, clicksToWin, gameMessage}
         const response = await gameService.getClickResult(user.id)
-        console.log(response)
+
         setUser(response.updatedPlayer)
         setClicksToWin(response.clicksToWin)
+        setGameMsg(response.gameMessage)
     }
 
     const handleNewGame = async (event) => {
@@ -59,12 +63,20 @@ const App = () => {
         setPassword(event.target.value)
     }
 
+    const setUpNotification = (message) => {
+        setMessage(message)
+        setTimeout(() => {
+            setMessage(null)
+        }, 5000)
+    }
+
     return (
         <div className='container'>
             <Router>
                 <div>
                     <div>
                         <Menu />
+                        <Notification message={message} />
                     </div>
                     <Route exact path = '/' render={() => <Home />} />
                     <Route exact path = '/login' render={() =>
@@ -79,6 +91,7 @@ const App = () => {
                             user={user}
                             handleNewGame={handleNewGame}
                             clicksToWin={clicksToWin}
+                            gameMsg={gameMsg}
                         /> :
                         <Redirect to='/login' />} />
                 </div>

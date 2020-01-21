@@ -21,7 +21,7 @@ const Login = (props) => {
                         value={props.password}
                         onChange={props.handlePasswordChange}
                     />
-                    <Button variant='primary' type='submit'>
+                    <Button className='button' type='submit'>
                         login
                     </Button>
                 </Form.Group>
