@@ -3,10 +3,11 @@ import { Button } from 'react-bootstrap'
 
 const Game = (props) => {
 
-    if(props.points < 1) {
+    if(props.user.points < 1) {
         return (
             <div>
                 <h2>Game Over!</h2>
+                <Button className='button' onClick={props.handleNewGame}>New Game</Button>
             </div>
         )
     }
@@ -19,6 +20,7 @@ const Game = (props) => {
             <p>Last result: {props.gameMsg}</p>
             <p>Clicks to next win: {props.clicksToWin}</p>
             <Button className='button' onClick={props.handleGameClick}>Lucky Click</Button>
+            <Button className='button' onClick={props.handleNewGame}>New Game</Button>
         </div>
     )
 }

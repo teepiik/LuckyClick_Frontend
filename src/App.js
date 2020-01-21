@@ -21,7 +21,7 @@ const App = () => {
     const [message, setMessage] = useState(null)
 
     useEffect(() => {
-        window.localStorage.clear()
+        //window.localStorage.clear()
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
         if(loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
@@ -60,10 +60,12 @@ const App = () => {
 
     const handleNewGame = async (event) => {
         event.preventDefault()
-        console.log('New game requested')
-        // api/users/newgame/id
         const response = await gameService.startNewGame(user.id)
+
         console.log(response)
+        setUser(response.updatedPlayer)
+        setClicksToWin(response.clicksToWin)
+        setGameMsg(response.gameMessage)
     }
 
     const handleUsernameChange = (event) => {
