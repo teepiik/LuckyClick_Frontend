@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Home from './Components/Home'
 import Login from './Components/Login'
 import Game from './Components/Game'
@@ -20,26 +20,37 @@ const App = () => {
     const [gameMsg, setGameMsg] = useState('')
     const [message, setMessage] = useState(null)
 
+    useEffect(() => {
+        window.localStorage.clear()
+        const loggedUserJSON = window.localStorage.getItem('loggedUser')
+        if(loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON)
+            setUser(user)
+            gameService.setToken(user.token)
+        }
+    }, [])
+
     const handleLogin = async (event) => {
         event.preventDefault()
         console.log('loggin in with', username, password)
         try {
-            const response = await loginService.login({ username, password })
-            window.localStorage.setItem('token', response.token)
-            setUser(response.user)
+            const user = await loginService.login({ username, password })
+            window.localStorage.setItem('loggedUser', JSON.stringify(user))
+            gameService.setToken(user.token)
+            console.log(user)
+            setUser(user)
             setUsername('')
             setPassword('')
-            setUpNotification(`Logged in as ${response.user.username}`) // FIX THIS
+            setUpNotification(`Logged in as ${user.username}`)
         } catch (error) {
+            setUpNotification('Logging in failed.')
+            setPassword('')
             console.log(error)
         }
     }
 
     const handleGameClick = async (event) => {
         event.preventDefault()
-        console.log('Button clicked!')
-        // api/users/click/id
-        // response {player, clicksToWin, gameMessage}
         const response = await gameService.getClickResult(user.id)
 
         setUser(response.updatedPlayer)
