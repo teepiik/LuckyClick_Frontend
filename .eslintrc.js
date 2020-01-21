@@ -2,7 +2,7 @@ module.exports = {
     "env": {
         "commonjs": true,
         "es6": true,
-        "node": true
+        "browser": true
     },
     "extends": [
         "eslint:recommended",
@@ -13,37 +13,37 @@ module.exports = {
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        'ecmaFeatures': {
-            'jsx': true
+        "ecmaFeatures": {
+            "jsx": true
         },
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "rules": {
-        'indent': [
-            'error',
+        "indent": [
+            "error",
             4
         ],
-        'no-console': 0,
-        'react/prop-types': 0,
-        'linebreak-style': [
-            'error',
-            'windows'
+        "no-console": 0,
+        "react/prop-types": 0,
+        "linebreak-style": [
+            "error",
+            "windows"
         ],
-        'quotes': [
-            'error',
-            'single'
+        "quotes": [
+            "error",
+            "single"
         ],
-        'semi': [
-            'error',
-            'never'
+        "semi": [
+            "error",
+            "never"
         ],
-        'object-curly-spacing': [
-            'error',
-            'always'
+        "object-curly-spacing": [
+            "error",
+            "always"
         ],
-        'arrow-spacing': [
-            'error',
+        "arrow-spacing": [
+            "error",
             { "before": true, "after": true}
         ],
         "eqeqeq": "error",
