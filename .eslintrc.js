@@ -13,6 +13,9 @@ module.exports = {
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
+        'ecmaFeatures': {
+            'jsx': true
+        },
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
@@ -22,6 +25,7 @@ module.exports = {
             4
         ],
         'no-console': 0,
+        'react/prop-types': 0,
         'linebreak-style': [
             'error',
             'windows'
