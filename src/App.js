@@ -8,11 +8,12 @@ import {
     Route, Redirect
 } from 'react-router-dom'
 import loginService from './Services/login'
+import gameService from './Services/game'
 
 
 const App = () => {
     const [user, setUser] = useState(null)
-    //const [points, setPoints] = useState('')
+    const [clicksToWin, setClicksToWin] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -20,13 +21,34 @@ const App = () => {
         event.preventDefault()
         console.log('loggin in with', username, password)
         try {
-            const user = await loginService.login({ username, password })
-            setUser(user)
+            const response = await loginService.login({ username, password })
+            window.localStorage.setItem('token', response.token)
+            setUser(response.user)
             setUsername('')
             setPassword('')
+            console.log(response)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleGameClick = async (event) => {
+        event.preventDefault()
+        console.log('Button clicked!')
+        // api/users/click/id
+        // response {player, clicksToWin, gameMessage}
+        const response = await gameService.getClickResult(user.id)
+        console.log(response)
+        setUser(response.updatedPlayer)
+        setClicksToWin(response.clicksToWin)
+    }
+
+    const handleNewGame = async (event) => {
+        event.preventDefault()
+        console.log('New game requested')
+        // api/users/newgame/id
+        const response = await gameService.startNewGame(user.id)
+        console.log(response)
     }
 
     const handleUsernameChange = (event) => {
@@ -52,7 +74,13 @@ const App = () => {
                             handleUsernameChange={handleUsernameChange}
                             handlePasswordChange={handlePasswordChange}
                         />} />
-                    <Route path='/game' render={() => user ? <Game /> : <Redirect to='/login' />} />
+                    <Route path='/game' render={() => user ?
+                        <Game handleGameClick={handleGameClick}
+                            user={user}
+                            handleNewGame={handleNewGame}
+                            clicksToWin={clicksToWin}
+                        /> :
+                        <Redirect to='/login' />} />
                 </div>
             </Router>
         </div>
