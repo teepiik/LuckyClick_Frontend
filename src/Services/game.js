@@ -1,11 +1,9 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3003/api/users'
 
-//let token = null
 let config = null
 
 const setToken = newToken => {
-    //token = `bearer ${newToken}`
     config = { headers: { Authorization: `bearer ${newToken}` } }
 }
 
@@ -19,4 +17,9 @@ const startNewGame = async id => {
     return res.data
 }
 
-export default { getClickResult, startNewGame, setToken }
+const getGameStatus = async id => {
+    const res = await axios.get(`${baseUrl}/gamestatus/${id}`, config)
+    return res.data
+}
+
+export default { getClickResult, startNewGame, setToken, getGameStatus }

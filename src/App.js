@@ -26,23 +26,26 @@ const App = () => {
     const [newPassword, setNewPassword] = useState('')
 
     useEffect(() => {
-        //window.localStorage.clear()
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
         if(loggedUserJSON) {
-            const user = JSON.parse(loggedUserJSON)
-            setUser(user)
-            gameService.setToken(user.token)
+            const fetchData = async (loggedUserJSON) => {
+                const user = JSON.parse(loggedUserJSON)
+                gameService.setToken(user.token)
+                const gameStatus = await gameService.getGameStatus(user.id)
+                user.points = gameStatus.points
+                setUser(user)
+                setClicksToWin(gameStatus.clicksToWin)
+            }
+            fetchData(loggedUserJSON)
         }
     }, [])
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        console.log('loggin in with', username, password)
         try {
             const user = await loginService.login({ username, password })
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
             gameService.setToken(user.token)
-            console.log(user)
             setUser(user)
             setUsername('')
             setPassword('')
@@ -50,7 +53,6 @@ const App = () => {
         } catch (error) {
             setUpNotification('Login failed.')
             setPassword('')
-            console.log(error)
         }
     }
 
@@ -75,12 +77,10 @@ const App = () => {
     const handleNewUser = async (event) => {
         event.preventDefault()
         try {
-            console.log('New user')
             const newUser = await userService.newUser({ username:newUsername, password:newPassword })
-            setUpNotification(`${newUser.username} created!`) // FIX MESSAGE
+            setUpNotification(`${newUser.username} created!`)
             setNewUsername('')
             setNewPassword('')
-            // Add login?
         } catch(error) {
             setUpNotification('New user registration failed.')
         }
