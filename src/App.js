@@ -4,12 +4,15 @@ import Login from './Components/Login'
 import Game from './Components/Game'
 import Menu from './Components/Menubar'
 import Notification from './Components/Notification'
+import NewUserForm from './Components/NewUserForm'
+import Logout from './Components/Logout'
 import {
     BrowserRouter as Router,
     Route, Redirect
 } from 'react-router-dom'
 import loginService from './Services/login'
 import gameService from './Services/game'
+import userService from './Services/user'
 
 
 const App = () => {
@@ -19,6 +22,8 @@ const App = () => {
     const [password, setPassword] = useState('')
     const [gameMsg, setGameMsg] = useState('')
     const [message, setMessage] = useState(null)
+    const [newUsername, setNewUsername] = useState('')
+    const [newPassword, setNewPassword] = useState('')
 
     useEffect(() => {
         //window.localStorage.clear()
@@ -43,7 +48,7 @@ const App = () => {
             setPassword('')
             setUpNotification(`Logged in as ${user.username}`)
         } catch (error) {
-            setUpNotification('Logging in failed.')
+            setUpNotification('Login failed.')
             setPassword('')
             console.log(error)
         }
@@ -62,10 +67,23 @@ const App = () => {
         event.preventDefault()
         const response = await gameService.startNewGame(user.id)
 
-        console.log(response)
         setUser(response.updatedPlayer)
         setClicksToWin(response.clicksToWin)
         setGameMsg(response.gameMessage)
+    }
+
+    const handleNewUser = async (event) => {
+        event.preventDefault()
+        try {
+            console.log('New user')
+            const newUser = await userService.newUser({ username:newUsername, password:newPassword })
+            setUpNotification(`${newUser.username} created!`) // FIX MESSAGE
+            setNewUsername('')
+            setNewPassword('')
+            // Add login?
+        } catch(error) {
+            setUpNotification('New user registration failed.')
+        }
     }
 
     const handleUsernameChange = (event) => {
@@ -74,6 +92,20 @@ const App = () => {
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value)
+    }
+
+    const handleNewUsernameChange = (event) => {
+        setNewUsername(event.target.value)
+    }
+
+    const handleNewPasswordChange = (event) => {
+        setNewPassword(event.target.value)
+    }
+
+    const handleLogout = () => {
+        window.localStorage.clear()
+        setUser(null)
+        setUpNotification('Logged out')
     }
 
     const setUpNotification = (message) => {
@@ -88,7 +120,7 @@ const App = () => {
             <Router>
                 <div>
                     <div>
-                        <Menu />
+                        <Menu user={user} />
                         <Notification message={message} />
                     </div>
                     <Route exact path = '/' render={() => <Home />} />
@@ -107,6 +139,16 @@ const App = () => {
                             gameMsg={gameMsg}
                         /> :
                         <Redirect to='/login' />} />
+                    <Route exact path = '/register' render={() =>
+                        <NewUserForm handleNewUser={handleNewUser}
+                            newUsername={newUsername}
+                            newPassword={newPassword}
+                            handleNewUsernameChange={handleNewUsernameChange}
+                            handleNewPasswordChange={handleNewPasswordChange}
+                        />} />
+                    <Route path = '/logout' render={() =>
+                        <Logout handleLogout={handleLogout}
+                        />} />
                 </div>
             </Router>
         </div>

@@ -1,35 +1,33 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 
-const Login = (props) => {
+const NewUserForm = (props) => {
     return (
         <div>
-            <h2>Please log in to play the Lucky Click.</h2>
-            <Form onSubmit={props.handleLogin}>
+            <h2>Register new Player</h2>
+            <Form onSubmit={props.handleNewUser}>
                 <Form.Group>
                     <Form.Label>Username: </Form.Label>
                     <Form.Control
                         type='text'
                         name='username'
-                        value={props.username}
-                        onChange={props.handleUsernameChange}
+                        value={props.newUsername}
+                        onChange={props.handleNewUsernameChange}
                     />
                     <Form.Label>Password: </Form.Label>
                     <Form.Control
                         type='password'
                         name='password'
-                        value={props.password}
-                        onChange={props.handlePasswordChange}
+                        value={props.newPassword}
+                        onChange={props.handleNewPasswordChange}
                     />
                     <Button className='button' type='submit'>
-                        login
+                        Register
                     </Button>
                 </Form.Group>
             </Form>
-            <p> You can also register new player <Link className='link' to='/register'>here</Link></p>
         </div>
     )
 }
 
-export default Login
+export default NewUserForm

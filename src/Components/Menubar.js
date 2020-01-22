@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const Menubar = () => {
+const Menubar = (props) => {
     return(
         <div>
             <Navbar collapseOnSelect expand='md'>
@@ -16,7 +16,10 @@ const Menubar = () => {
                             <Link className='link' to='/game'>Game</Link>
                         </Nav.Link>
                         <Nav.Link href='#' as='span'>
-                            <Link className='link' to='/login'>Login</Link>
+                            {props.user
+                                ? <Link className='link' to='/logout'>Logout</Link> :
+                                <Link className='link' to='/login'>Login</Link>
+                            }
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
