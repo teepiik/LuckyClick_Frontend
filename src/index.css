@@ -1,5 +1,5 @@
-.link {
-  padding: 5px
+.menulink {
+  color: rgb(164, 174, 184);
 }
 
 .message {
@@ -14,5 +14,4 @@
 
 .button {
   margin-top: 5px;
-  background: lightsteelblue;
 }

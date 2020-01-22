@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom'
 const Menubar = (props) => {
     return(
         <div>
-            <Navbar collapseOnSelect expand='md'>
+            <Navbar collapseOnSelect expand='md' bg='dark' variant='dark'>
                 <Navbar.Toggle aira-controls='responsive-navbar-nav' />
                 <Navbar.Collapse id='responsive-navbar-nav'>
                     <Nav className='mr-auto'>
                         <Nav.Link href='#' as='span'>
-                            <Link className='link' to='/'>Home</Link>
+                            <Link className='menulink' to='/'>Home</Link>
                         </Nav.Link>
                         <Nav.Link href='#' as='span'>
-                            <Link className='link' to='/game'>Game</Link>
+                            <Link className='menulink' to='/game'>Game</Link>
                         </Nav.Link>
                         <Nav.Link href='#' as='span'>
                             {props.user
-                                ? <Link className='link' to='/logout'>Logout</Link> :
-                                <Link className='link' to='/login'>Login</Link>
+                                ? <Link className='menulink' to='/logout'>Logout</Link> :
+                                <Link className='menulink' to='/login'>Login</Link>
                             }
                         </Nav.Link>
                     </Nav>

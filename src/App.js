@@ -78,6 +78,7 @@ const App = () => {
         event.preventDefault()
         try {
             const newUser = await userService.newUser({ username:newUsername, password:newPassword })
+
             setUpNotification(`${newUser.username} created!`)
             setNewUsername('')
             setNewPassword('')
