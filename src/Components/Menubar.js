@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Menubar = (props) => {
     return(
-        <div>
+        <div className='menubar'>
             <Navbar collapseOnSelect expand='md' bg='dark' variant='dark'>
                 <Navbar.Toggle aira-controls='responsive-navbar-nav' />
                 <Navbar.Collapse id='responsive-navbar-nav'>

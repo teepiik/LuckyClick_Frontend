@@ -12,8 +12,13 @@ const Home = () => {
                 <em>
                     Every game starts with user having 20 points.<br></br>
                     Every click costs 1 points.<br></br>
-                    Every 10th click on server rewards 5 points, every 100th click 40 points and 
-                    every 500th click 250 points. Only the highest win is rewarded.<br></br>
+                    Server rewards:<br></br>
+                    <ol>
+                        <li>Every 10th click 5 points</li>
+                        <li>Every 100th click 40 points</li>
+                        <li>Every 500th click 250 points</li>
+                        <li>Only the highest win is rewarded.</li>
+                    </ol>
                     Players get information after click that how many clicks away is the next win.<br></br>
                     Game ends if player has 0 (or less) points.
                 </em>

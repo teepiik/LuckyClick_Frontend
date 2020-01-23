@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 
 const Game = (props) => {
 
@@ -14,12 +14,19 @@ const Game = (props) => {
 
     return (
         <div>
-            <p>Game page</p>
-            <p>Player: {props.user.username}</p>
-            <p>Points: {props.user.points}</p>
-            <p>Last result: {props.gameMsg}</p>
-            <p>Clicks to next win: {props.clicksToWin}</p>
-            <Button className='button' variant='dark' onClick={props.handleGameClick}>Lucky Click</Button>
+            <Row>
+                <Col>
+                    <div className='gamebox'>
+                        <p className='gameboxtitle'>Lucky Click</p>
+                        <p className='gameboxplayer'>{props.user.username}</p>
+                        <p>Points: {props.user.points}</p>
+                        <p>Last result: {props.gameMsg}</p>
+                        <p>Clicks to next win: {props.clicksToWin}</p>
+                        <Button className='button' variant='dark' onClick={props.handleGameClick}>Lucky Click</Button>
+                    </div>
+                </Col>
+                <Col></Col>
+            </Row>
         </div>
     )
 }
